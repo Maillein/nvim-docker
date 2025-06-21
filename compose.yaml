@@ -1,0 +1,20 @@
+services: 
+    neovim:
+        build: ./
+        container_name: neovim
+        tty: true
+        environment:
+          TZ: Asia/Tokyo
+          XDG_CACHE_HOME: /root/.cache
+        volumes:
+          # プロジェクトディレクトリの同期
+          - $PWD:/usr/projects 
+          # nvimの設定を弄った時のために同期しておく
+          - ./config/nvim:/root/.config/nvim 
+          # LSPなどmasonでインストールするものは立ち上げるたびにインストールされるのでここで永続化
+          - ./mason:/root/.local/share/nvim/mason 
+          # nvimやLSPのキャッシュ 立ち上げるたびにindex作り直すので永続化
+          - ./cache:/root/.cache 
+          # treesitterのパーサー 立ち上げる度に消えるので永続化
+          - ./parser:/root/.local/share/nvim/lazy/nvim-treesitter/parser
+

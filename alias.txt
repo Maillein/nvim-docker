@@ -1,0 +1,1 @@
+alias nvim='docker compose -f $HOME/nvim-docker/compose.yaml run --rm neovim'
